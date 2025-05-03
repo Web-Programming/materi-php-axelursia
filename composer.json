@@ -1,0 +1,15 @@
+{
+    "name": "lenovo/materi-php-axelursia",
+    "autoload": {
+        "psr-4": {
+            "Lenovo\\MateriPhpAxelursia\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Axel Theo Winata Ursia",
+            "email": "axeltheowinataursia_2226240117@mhs.mdp.ac.id"
+        }
+    ],
+    "require": {}
+}
