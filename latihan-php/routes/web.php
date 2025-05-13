@@ -1,24 +1,37 @@
 <?php
 
+use App\Http\Controllers\MateriController;
+use App\Http\Controllers\MhsApiController;
+use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
-use App\http\controllers\ProdiController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::get('login', function () {
-    return view('login', ['name' => 'Axel Ursia',
-                          'email' => 'axelursia@gmail.com',
-                          'alamat' => 'mangkunegara'
-]
-);
-});
-Route::get('/berita/{id}/{judul?}', function ($id, $judul = judul) {
-    return view('berita', ['id' => $id, 'judul' => $judul]);
+Route::get("/profil", function(){
+    return view("profil");
 });
 
-Route::get('/prodi/index', [ProdiController::class, 'index']);
-Route::get('/prodi/create', [ProdiController::class, 'create']);
-Route::get('/prodi/welcome', [ProdiController::class, 'index']);
-Route::get('/layout/dashboard', [ProdiController::class, 'index']);
+Route::get("/berita/{id}/{title?}", function($id, $title = NULL){
+    return view("berita", ['id' => $id, 'title' => $title]);
+});
+
+Route::get("/total/{bil1}/{bil2?}/{bil3?}", 
+    function($bil1, $bil2, $bil3 = 0){
+    return view("hasil", [
+        'total' => $bil1 + $bil2 + $bil3, 
+        'bil1' => $bil1, 
+        'bil2' => $bil2, 
+        'bil3' => $bil3
+    ]);
+});
+
+
+Route::get('/materi/index', [MateriController::class, 'index']);
+
+Route::get('/materi/detail/{id}', [MateriController::class, 'detail']);
+
+Route::resource('prodi', ProdiController::class);
+
+Route::apiResource('api/mhs', MhsApiController::class);
