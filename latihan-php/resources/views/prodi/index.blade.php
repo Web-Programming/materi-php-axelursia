@@ -1,9 +1,8 @@
 @extends('layout.master')
+@section('tittle', "halaman list prodi")
+    
 
-@section('title',"Halaman List Prodi")
-
-@section('Content')
-
+@section('content')
 <div>
     <h1>Ini Halaman Prodi</h1>
 </div>

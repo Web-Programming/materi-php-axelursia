@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 
 class ProdiController extends Controller
 {
-    function index(){
-        return view("prodi.index");
+    public function index(){
+        $listprodi = Prodi::get();
+        return view("prodi.index", ['listprodi' => $listprodi]
+        );
+    }
+
+        public function create() {
+        return view("prodi.create");
     }
 }
+
