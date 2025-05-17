@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "Halaman Detail Prodi")
+@section('title', "Halaman List Prodi")
 
 @section('content')
         <!--begin::App Content Header-->
@@ -33,7 +33,7 @@
                 <!-- Default box -->
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Program Studi</h3>
+                    <h3 class="card-title">Crate Program Studi</h3>
                     <div class="card-tools">
                       <button
                         type="button"
@@ -55,30 +55,19 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <form method="post" action="{{url("post")}}">
+
+                    <form method="post" action="{{ url("prodi") }}">
                       @csrf
                       <div class="mb-3">
                         <label >Nama Prodi</label>
-                        <input type="text" name="nama_prodi" class="form-control">
+                        <input type="text" name="nama" class="form-control">
                       </div>
                       <div class="mb-3">
                         <label>Kode Prodi</label>
                         <input type="text" name="kode_prodi" class="form-control">
                       </div>
-                      <button type="submit" class="btn btn-primay">Simpan</button>
-                    </form>
-                    <form action="{{ url("/prodi")}}" method="post">
-                      @csrf
-                      <div class="">
-                        <label class="">Kode Prodi</label>
-                        <input class="form-control" type="text" name="kode_prodi">
-                      </div>   
-                      <div class="">
-                        <label class="">Nama Prodi</label>
-                        <input class="form-control" type="text" name="nama">
-                      </div>                            
-                      <button type="submit" class="btn btn-success">Simpan</button>
-                    </form>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>                
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer">Footer</div>
@@ -93,4 +82,3 @@
         </div>
         <!--end::App Content-->
 @endsection
-

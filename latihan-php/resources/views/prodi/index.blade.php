@@ -64,7 +64,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $listprodi as $Prodi )
+                            @foreach ( $listprodi as $prodi )
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$prodi->nama}}</td>
