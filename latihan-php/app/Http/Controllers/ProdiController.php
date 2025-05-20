@@ -54,18 +54,7 @@ class ProdiController extends Controller
             'fakultas_id' => $data['fakultas_id']
         ]);
         
-        //cara 2
-        //response true atau false
-        // Prodi::insert([
-        //     'kode_prodi' => $data['kode_prodi'],
-        //     'nama' => $data['nama'],
-        // ]);
-        
-        //cara 3
-        // $newprodi = new Prodi();
-        // $newprodi->kode_prodi = $data['kode_prodi'];
-        // $newprodi->nama = $data['nama'];
-        // $newprodi->save();
+
 
         //arahkan/pindahkan ke halaman tujuan
         return redirect("prodi")->with("status", "Program Studi berhasil disimpan!");
@@ -135,9 +124,7 @@ class ProdiController extends Controller
             return redirect("prodi")->with("status", "Program Studi berhasil dihapus!");
         }
 
-        return redirect("prodi")->with("failed", "Program Studi gagal dihapus!");
-        // $delete = DB::table("prodis")
-        //     ->where("id", $id)
-        //     ->delete();
+        return redirect("prodi")->with("failed", "Program Studi ini gagal dihapus!");
+
     }
 }
