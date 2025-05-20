@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "Halaman Detail Prodi")
+@section('title', "Halaman Edit Prodi")
 
 @section('content')
         <!--begin::App Content Header-->
@@ -56,7 +56,27 @@
                   </div>
                   <div class="card-body">
 
-                    Form Edit Progam Studi
+                  <form action="{{ url("/prodi/".$prodi->id)}}" method="post">
+                      @method("PUT")
+                      @csrf
+                      <!-- <div class="">
+                        <label class="">Kode Prodi</label>
+                        <input class="form-control" type="text" name="kode_prodi" 
+                          value="{{ old("kode_prodi", $prodi->kode_prodi) }}">
+                        @error("kode_prodi")
+                          <p class="text-danger"> {{ $message }} </p>
+                        @enderror
+                      </div>    -->
+                      <div class="">
+                        <label class="">Nama Prodi</label>
+                        <input class="form-control" type="text" name="nama" 
+                        value="{{ old("nama", $prodi->nama) }}">
+                        @error("nama")
+                          <p class="text-danger"> {{ $message }} </p>
+                        @enderror
+                      </div>                            
+                      <button type="submit" class="btn btn-warning">Update</button>
+                    </form>
 
                   </div>
                   <!-- /.card-body -->

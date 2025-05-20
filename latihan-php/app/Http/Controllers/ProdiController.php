@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
 use App\Models\Prodi;
+use DB;
 use Illuminate\Http\Request;
 
 class ProdiController extends Controller
@@ -10,10 +12,12 @@ class ProdiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        $listprodi = Prodi::get();
+    public function index()
+    {
+        $listprodi = Prodi::all(); //select * from prodis;
+        //$listprodi = DB::table("prodis")->get();
         return view("prodi.index", 
-        ['listprodi' => $listprodi]
+            ['listprodi' => $listprodi]
         );
     }
 
@@ -22,7 +26,11 @@ class ProdiController extends Controller
      */
     public function create()
     {
-        return view("prodi.create");
+        $fakutas = Fakultas::all();
+        return view("prodi.create", [
+            'fakultas' => $fakutas
+        ]);
+
     }
 
     /**
@@ -30,26 +38,37 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate(
-            [
-                'nama' => 'required|min:5|max:20',
-                'kode_prodi' => 'required|min:2|max:2'
-                ]
-            );
+        //Form Validation
+        $data = $request->validate([
+            'kode_prodi' => 'required|min:2|max:2',
+            'nama' => 'required|min:5|max:25',
+            'fakultas_id'=> 'required'
+        ]);
 
-            $prodi = new Prodi();
-            $prodi->nama = $validateData['nama'];
-            $prodi->kode_prodi = $validateData['kode_prodi'];
-            $prodi->save();
+        //$data = $request->all();
+        //cara 1
+        //response object dari created data
+        Prodi::create([
+            'kode_prodi' => $data['kode_prodi'],
+            'nama'          => $data['nama'],
+            'fakultas_id' => $data['fakultas_id']
+        ]);
+        
+        //cara 2
+        //response true atau false
+        // Prodi::insert([
+        //     'kode_prodi' => $data['kode_prodi'],
+        //     'nama' => $data['nama'],
+        // ]);
+        
+        //cara 3
+        // $newprodi = new Prodi();
+        // $newprodi->kode_prodi = $data['kode_prodi'];
+        // $newprodi->nama = $data['nama'];
+        // $newprodi->save();
 
-            //Prodi::create([
-            //    'nama' => $validateData['nama'],
-            //    'kode_prodi' => $validateData['kode_prodi']
-            //]);
-
-            return redirect("prodi")->with("status",
-            "Data Program Studi berhasil disimpan!");
-        //
+        //arahkan/pindahkan ke halaman tujuan
+        return redirect("prodi")->with("status", "Program Studi berhasil disimpan!");
     }
 
     /**
@@ -57,13 +76,12 @@ class ProdiController extends Controller
      */
     public function show(string $id)
     {
-        //select prodi by id
         $prodi = Prodi::find($id);
-
-        //buat view detail di folder view prodi
-        return view("prodi.detail", 
-        [
-            'detailprodi' => $prodi
+        if(!isset($prodi->id)){
+            return redirect("prodi")->with("failed", "Program Studi tidak ditemukan!");
+        }
+        return view("prodi.detail", [
+            'prodi' => $prodi
         ]);
     }
 
@@ -72,15 +90,17 @@ class ProdiController extends Controller
      */
     public function edit(string $id)
     {
-        //select prodi by id
-        $prodi = Prodi::find($id);
+        //Ambil data berdasarkan id
+        $prodi = Prodi::find($id); 
+        if(!isset($prodi->id)){
+            return redirect("prodi")->with("failed", "Program Studi tidak ditemukan!");
+        }
 
-        //buat view detail di folder view prodi
-        return view("prodi.edit", 
-        [
-            'editprodi' => $prodi
+        //select * from prodis where id = $id
+        //kirma data ke view
+        return view("prodi.edit", [
+            'prodi' => $prodi
         ]);
-
     }
 
     /**
@@ -88,7 +108,19 @@ class ProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //Form Validation
+        $data = $request->validate([
+            //'kode_prodi' => 'required|min:2|max:2',
+            'nama' => 'required|min:5|max:25'
+        ]);
+        //update data
+        $prodi = Prodi::find($id);
+        //$prodi->kode_prodi = $data['kode_prodi'];
+        $prodi->nama = $data['nama'];
+        $prodi->save();
+
+        return redirect("prodi")
+            ->with("status", "Program Studi berhasil diupdate!");
     }
 
     /**
@@ -96,6 +128,16 @@ class ProdiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $prodi = Prodi::find($id);
+
+        if(isset($prodi->id)){
+            $prodi->delete();
+            return redirect("prodi")->with("status", "Program Studi berhasil dihapus!");
+        }
+
+        return redirect("prodi")->with("failed", "Program Studi gagal dihapus!");
+        // $delete = DB::table("prodis")
+        //     ->where("id", $id)
+        //     ->delete();
     }
 }
