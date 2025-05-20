@@ -42,18 +42,27 @@ class ProdiController extends Controller
         $data = $request->validate([
             'kode_prodi' => 'required|min:2|max:2',
             'nama' => 'required|min:5|max:25',
-            'fakultas_id'=> 'required'
+            'fakultas_id'=> 'required',
+            'logo' => 'image|mines:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        //$data = $request->all();
-        //cara 1
-        //response object dari created data
-        Prodi::create([
-            'kode_prodi' => $data['kode_prodi'],
-            'nama'          => $data['nama'],
-            'fakultas_id' => $data['fakultas_id']
-        ]);
-        
+        $prodi = new Prodi();
+        $prodi->nama = $validateData['nama'];
+        $prodi->kode_prodi = $validateData['kode_prodi'];
+        //upload logo
+        if($request->hasFile('logo')){
+            $file = $request->file('logo');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $prodi->logo = $filename;
+        }
+
+        $prodi->save();
+
+        //Prodi::create([
+          //  'kode_prodi' => $data['kode_prodi'],
+        //    'nama'          => $data['nama'],
+        //]);      
 
 
         //arahkan/pindahkan ke halaman tujuan
