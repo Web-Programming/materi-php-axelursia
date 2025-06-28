@@ -3,10 +3,10 @@
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>@yield('title')</title>
+    <title>AdminLTE v4 | Dashboard</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="AdminLTE 4 | Fixed Sidebar" />
+    <meta name="title" content="Axel Ursia | Latihan" />
     <meta name="author" content="ColorlibHQ" />
     <meta
       name="description"
@@ -42,33 +42,177 @@
     />
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="{{ asset('/css/adminlte.css') }}" />
+    <link rel="stylesheet" href="../../dist/css/adminlte.css" />
     <!--end::Required Plugin(AdminLTE)-->
+    <!-- apexcharts -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+      integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
+      crossorigin="anonymous"
+    />
+    <!-- jsvectormap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
+      integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4="
+      crossorigin="anonymous"
+    />
   </head>
   <!--end::Head-->
   <!--begin::Body-->
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
-
-    
-
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
-      <!-- Ini Bagian Header -->
-      @include('layout.header')
-     
+      <!--begin::Header-->
+      <nav class="app-header navbar navbar-expand bg-body">
+        <!--begin::Container-->
+        <div class="container-fluid">
+          <!--begin::Start Navbar Links-->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                <i class="bi bi-list"></i>
+              </a>
+            </li>
+            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
+          </ul>
+          <!--end::Start Navbar Links-->
+          <!--begin::End Navbar Links-->
+          <ul class="navbar-nav ms-auto">
+            <!--begin::Navbar Search-->
+            <li class="nav-item">
+              <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                <i class="bi bi-search"></i>
+              </a>
+            </li>
+            <!--end::Navbar Search-->
+            <!--begin::Messages Dropdown Menu-->
+            <!--end::Messages Dropdown Menu-->
+            <!--begin::Notifications Dropdown Menu-->
+            <li class="nav-item dropdown">
+              <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                <i class="bi bi-bell-fill"></i>
+                <span class="navbar-badge badge text-bg-warning">15</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                  <i class="bi bi-envelope me-2"></i> 4 new messages
+                  <span class="float-end text-secondary fs-7">3 mins</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+              </div>
+            </li>
+            <!--end::Notifications Dropdown Menu-->
+            <!--begin::Fullscreen Toggle-->
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-lte-toggle="fullscreen">
+                <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+                <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
+              </a>
+            </li>
+            <!--end::Fullscreen Toggle-->
+            <!--begin::User Menu Dropdown-->
+            <li class="nav-item dropdown user-menu">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img
+                  src="../../dist/assets/img/pp.jpg"
+                  class="user-image rounded-circle shadow"
+                  alt="User Image"
+                />
+                <span class="d-none d-md-inline">Axel Ursia</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <!--begin::User Image-->
+                <li class="user-header text-bg-primary">
+                  <img
+                    src="../../dist/assets/img/pp.jpg"
+                    class="rounded-circle shadow"
+                    alt="User Image"
+                  />
+                  <p>
+                    Axel Ursia - Informatika
+                    <small>Member since okt. 2024</small>
+                  </p>
+                </li>
+                <!--end::User Image-->
+                <!--begin::Menu Body-->
+                  <!--end::Row-->
+                </li>
+                <!--end::Menu Body-->
+                <!--begin::Menu Footer-->
+                <li class="user-footer">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                </li>
+                <!--end::Menu Footer-->
+              </ul>
+            </li>
+            <!--end::User Menu Dropdown-->
+          </ul>
+          <!--end::End Navbar Links-->
+        </div>
+        <!--end::Container-->
 
-      <!-- Ini Bagian Sidebar -->
-      @include('layout.sidebar')
+        <script>
+     // Menambahkan event listener untuk scroll perlambat pada klik navbar
+     const scrollLinks = document.querySelectorAll('nav ul li a');
+
+scrollLinks.forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault(); // Mencegah default klik yang langsung menuju lokasi
+
+    const targetId = this.getAttribute('href').substring(1); // Mendapatkan ID tujuan
+    const targetElement = document.getElementById(targetId); // Mencari elemen tujuan
+
+    // Menggunakan window.scrollTo dengan opsi behavior smooth
+    window.scrollTo({
+      top: targetElement.offsetTop, // Posisi elemen tujuan
+      behavior: 'smooth' // Scroll yang halus
+    });
+  });
+});
+  </script>
+
+      </nav>
+      <!--end::Header-->
+      <!--begin::Sidebar-->
+      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <!--begin::Sidebar Brand-->
+        <div class="sidebar-brand">
+          <!--begin::Brand Link-->
+          <a href="./index.html" class="brand-link">
+            <!--begin::Brand Image-->
+            <img
+              src="https://media.licdn.com/dms/image/v2/D560BAQG4GyHDCdsakA/company-logo_200_200/company-logo_200_200/0/1700127675105/universitas_mdp_logo?e=2147483647&v=beta&t=ec47FKsbmv25qjMCx9dvjF8gyTfDpFwCNOgl2B8eQp4"
+              alt="UMDP Logo"
+              class="brand-image opacity-75 shadow"
+            />
+            <!--end::Brand Image-->
+            <!--begin::Brand Text-->
+            <span class="brand-text fw-light">Universitas MDP</span>
+            <!--end::Brand Text-->
+          </a>
+          <!--end::Brand Link-->
+        </div>
+        <!--end::Sidebar Brand-->
+        <!--begin::Sidebar Wrapper-->
+               <!---->
+      <!--end::Sidebar-->
       <!--begin::App Main-->
-      <main class="app-main">
-        <!-- Ini Bagian Content -->
-        @yield('content')
-      </main>
+
+
       <!--end::App Main-->
-     
-      
-      <!-- Ini Bagian Footer-->
+      @include('layout.header')
+      @include('layout.sidebar')
+
+      @yield('content')
+      <!--begin::Footer-->
       @include('layout.footer')
+      <!--end::Footer-->
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->
@@ -91,7 +235,7 @@
       crossorigin="anonymous"
     ></script>
     <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-    <script src="{{ asset('js/adminlte.js') }}"></script>
+    <script src="../../dist/js/adminlte.js"></script>
     <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
     <script>
       const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
@@ -114,6 +258,211 @@
       });
     </script>
     <!--end::OverlayScrollbars Configure-->
+    <!-- OPTIONAL SCRIPTS -->
+    <!-- sortablejs -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
+      integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ="
+      crossorigin="anonymous"
+    ></script>
+    <!-- sortablejs -->
+    <script>
+      const connectedSortables = document.querySelectorAll('.connectedSortable');
+      connectedSortables.forEach((connectedSortable) => {
+        let sortable = new Sortable(connectedSortable, {
+          group: 'shared',
+          handle: '.card-header',
+        });
+      });
+
+      const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
+      cardHeaders.forEach((cardHeader) => {
+        cardHeader.style.cursor = 'move';
+      });
+    </script>
+    <!-- apexcharts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+      integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
+      crossorigin="anonymous"
+    ></script>
+    <!-- ChartJS -->
+    <script>
+      // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
+      // IT'S ALL JUST JUNK FOR DEMO
+      // ++++++++++++++++++++++++++++++++++++++++++
+
+      const sales_chart_options = {
+        series: [
+          {
+            name: 'Digital Goods',
+            data: [28, 48, 40, 19, 86, 27, 90],
+          },
+          {
+            name: 'Electronics',
+            data: [65, 59, 80, 81, 56, 55, 40],
+          },
+        ],
+        chart: {
+          height: 300,
+          type: 'area',
+          toolbar: {
+            show: false,
+          },
+        },
+        legend: {
+          show: false,
+        },
+        colors: ['#0d6efd', '#20c997'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        xaxis: {
+          type: 'datetime',
+          categories: [
+            '2023-01-01',
+            '2023-02-01',
+            '2023-03-01',
+            '2023-04-01',
+            '2023-05-01',
+            '2023-06-01',
+            '2023-07-01',
+          ],
+        },
+        tooltip: {
+          x: {
+            format: 'MMMM yyyy',
+          },
+        },
+      };
+
+      const sales_chart = new ApexCharts(
+        document.querySelector('#revenue-chart'),
+        sales_chart_options,
+      );
+      sales_chart.render();
+    </script>
+    <!-- jsvectormap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
+      integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
+      integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY="
+      crossorigin="anonymous"
+    ></script>
+    <!-- jsvectormap -->
+    <script>
+      const visitorsData = {
+        US: 398, // USA
+        SA: 400, // Saudi Arabia
+        CA: 1000, // Canada
+        DE: 500, // Germany
+        FR: 760, // France
+        CN: 300, // China
+        AU: 700, // Australia
+        BR: 600, // Brazil
+        IN: 800, // India
+        GB: 320, // Great Britain
+        RU: 3000, // Russia
+      };
+
+      // World map by jsVectorMap
+      const map = new jsVectorMap({
+        selector: '#world-map',
+        map: 'world',
+      });
+
+      // Sparkline charts
+      const option_sparkline1 = {
+        series: [
+          {
+            data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
+          },
+        ],
+        chart: {
+          type: 'area',
+          height: 50,
+          sparkline: {
+            enabled: true,
+          },
+        },
+        stroke: {
+          curve: 'straight',
+        },
+        fill: {
+          opacity: 0.3,
+        },
+        yaxis: {
+          min: 0,
+        },
+        colors: ['#DCE6EC'],
+      };
+
+      const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
+      sparkline1.render();
+
+      const option_sparkline2 = {
+        series: [
+          {
+            data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
+          },
+        ],
+        chart: {
+          type: 'area',
+          height: 50,
+          sparkline: {
+            enabled: true,
+          },
+        },
+        stroke: {
+          curve: 'straight',
+        },
+        fill: {
+          opacity: 0.3,
+        },
+        yaxis: {
+          min: 0,
+        },
+        colors: ['#DCE6EC'],
+      };
+
+      const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
+      sparkline2.render();
+
+      const option_sparkline3 = {
+        series: [
+          {
+            data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
+          },
+        ],
+        chart: {
+          type: 'area',
+          height: 50,
+          sparkline: {
+            enabled: true,
+          },
+        },
+        stroke: {
+          curve: 'straight',
+        },
+        fill: {
+          opacity: 0.3,
+        },
+        yaxis: {
+          min: 0,
+        },
+        colors: ['#DCE6EC'],
+      };
+
+      const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
+      sparkline3.render();
+    </script>
     <!--end::Script-->
   </body>
   <!--end::Body-->
